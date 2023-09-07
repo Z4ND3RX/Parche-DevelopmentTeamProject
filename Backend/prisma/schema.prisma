@@ -9,3 +9,40 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Event {
+  id Int @id @default(autoincrement())
+  title String 
+  content String 
+  createdAt DateTime @default(now())
+  active Boolean @default(true)
+  nicknameUser String
+  eventsCategories EventCategory[]
+  eventImages Image[]
+}
+
+//Category table
+model Category {
+  id Int @id @default(autoincrement())
+  title String
+  eventsCategories EventCategory[]
+}
+
+// bridge between Post and Category (many-to-many relationship)
+model EventCategory {
+  id Int @id @default(autoincrement())
+  idEvent Int
+  idCategory Int
+  event Event @relation(fields: [idEvent], references: [id])
+  category Category @relation(fields: [idCategory], references: [id])
+}
+
+model Image{
+  id Int @id @default(autoincrement())
+  idEvent Int
+  type String
+  name String
+  event Event @relation(fields: [idEvent], references: [id])
+}
+
+
