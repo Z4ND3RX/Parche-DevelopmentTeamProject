@@ -16,6 +16,8 @@ model Event {
   content String 
   createdAt DateTime @default(now())
   active Boolean @default(true)
+  date DateTime
+  cantAsistentes Int @default(0)
   nicknameUser String
   eventsCategories EventCategory[]
   eventImages Image[]
