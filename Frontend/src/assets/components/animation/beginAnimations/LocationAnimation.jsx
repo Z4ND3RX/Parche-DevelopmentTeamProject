@@ -1,12 +1,12 @@
 import Lottie from "lottie-react";
-import icon from "../../animation/icon/HouseLocation.json" 
+import icon from "../../../../assets/animation/icon/animation_lmnz1lhi.json" 
 
 const style = {
-  height: "70px",
-  width: "70px",
+  height: "100px",
+  width: "100px",
 };
 
-function AnimationIcon() {
+function LocationAnimation() {
     return (
           <Lottie animationData={icon} style={style} />
       );

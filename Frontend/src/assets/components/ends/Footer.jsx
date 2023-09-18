@@ -81,23 +81,10 @@ const Footer = () => {
                 mb: 2,
               }}
             >
-              Encuentra este proyecto en GitHub
+              (Aqui abajo va el icono de Brais Tech)
             </Typography>
 
-            <IconBox>
-              <AnimationFooter
-                ruta="https://www.linkedin.com/in/z4nd3rx"
-                animationJSON={linkedin}
-              />
-              <AnimationFooter
-                ruta="https://github.com/Z4ND3RX/Parche-DevelopmentTeamProject"
-                animationJSON={github}
-              />
-              <AnimationFooter
-                ruta="https://www.behance.net/Z4ND3RX"
-                animationJSON={behance}
-              />
-            </IconBox>
+            
           </Box>
         </CustomContainer>
       </CustomContainer>
