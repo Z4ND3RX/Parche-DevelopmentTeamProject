@@ -23,11 +23,12 @@ function NavbarLinksBox() {
             <NavLink to={"/"} style={{ textDecoration: "none" }}>
                 <NavLinkStyle text="Inicio" />
             </NavLink>
-            <NavLink to={"/"} style={{ textDecoration: "none" }}>
-                <NavLinkStyle text="Eventos" />
-            </NavLink>
             {isAuthenticated ? (
-                <NavLink to={"/"} style={{ textDecoration: "none" }}>
+                <NavLink to={"/Events"} style={{ textDecoration: "none" }}>
+                    <NavLinkStyle text="Eventos" />
+                </NavLink>) : (<></>)}
+            {isAuthenticated ? (
+                <NavLink to={"/Profile"} style={{ textDecoration: "none" }}>
                     <NavLinkStyle text="Perfil" />
                 </NavLink>
             ) : (

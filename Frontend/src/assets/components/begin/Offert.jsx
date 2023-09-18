@@ -2,27 +2,24 @@ import { Box, Container, styled, Typography } from "@mui/material";
 import React from "react";
 
 import comment from "../../animation/icon/Comments.json";
-import replace1 from "../../animation/icon/Question.json";
-import replace2 from "../../animation/icon/HouseLocation.json";
-//import time from "../../animation/45733-movie-time-animation.json";
-//import cinema from "../../animation/45732-cinema-animation.json";
+import point from "../../animation/icon/point.json";
+import hobbies from "../../animation/icon/Hobbies.json";
 
 import { HelperAnimation } from "../animation/HelperAnimation";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const ServicesData = [
   {
     animation: comment,
-    title: "Interacción social",
+    title: "Interacción Social",
   },
 
   {
-    animation: replace1,
-    title: "add",
+    animation: point,
+    title: "Ubicación Geográfica",
   },
   {
-    animation: replace2,
-    title: "Organizado y Programable",
+    animation: hobbies,
+    title: "Diversidad",
   },
 ];
 

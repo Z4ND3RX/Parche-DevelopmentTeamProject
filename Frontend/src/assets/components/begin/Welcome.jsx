@@ -7,7 +7,9 @@ import movie from "../../animation/icon/animation_lmnz1lhi.json";
 
 import LoginButton from "../buttons/LoginButton";
 import CustomBox from "../style/CustomBox";
-import Title from "../style/Title";
+import Title from "../style/typographies/Title";
+import Subtitle from "../style/typographies/Subtitle";
+import Paragraph from "../style/typographies/Paragraph";
 
 function Welcome() {
     return (
@@ -15,27 +17,18 @@ function Welcome() {
           <Container>
             <CustomBox>
               <Box sx={{ flex: "1" }}>
-                <Typography
+                <Subtitle
                   variant="body2"
-                  sx={{
-                    fontSize: "18px",
-                    color: "#687690",
-                    fontWeight: "500",
-                    mt: 5,
-                    mb: 4,
-                  }}
                 >
                   Bienvenido a Parche Vacaciones
-                </Typography>
+                </Subtitle>
                 <Title variant="h1">
                   Todos los parches que quieras a un click.
                 </Title>
-                <Typography
-                  variant="body2"
-                  sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
+                <Paragraph
                 >
                   ¡Bienvenido a un mundo de posibilidades infinitas! Únete a nosotros y sé parte de esta emocionante revolución digital, donde las ideas cobran vida y las posibilidades son ilimitadas.
-                </Typography>
+                </Paragraph>
                 <LoginButton text="Empieza Aquí" variant="contained" />
               </Box>
     

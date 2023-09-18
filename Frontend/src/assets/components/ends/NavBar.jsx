@@ -52,13 +52,13 @@ export const NavBar = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inicio", "Eventos", isAuthenticated ? "Perfil" : ""].map(
+        {["Inicio", isAuthenticated ? "Eventos" : "", isAuthenticated ? "Perfil" : ""].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
                   {index === 0 && <HomeIcon />}
-                  {index === 1 && <FeaturedPlayListIcon />}
+                  {isAuthenticated ? (index === 1 && <FeaturedPlayListIcon />) : <></>}
                   {isAuthenticated ? (index === 2 && <MiscellaneousServicesIcon />) : <></>}
                 </ListItemIcon>
                 <ListItemText primary={text} />
