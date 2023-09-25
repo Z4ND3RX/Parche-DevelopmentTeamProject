@@ -1,3 +1,12 @@
+If you want to run this proyect, you should follow these steps:
+
+1. Firstable, you might install "npm" if you want to run this proyect in a local port.
+   
+![image](https://github.com/Z4ND3RX/Parche-DevelopmentTeamProject/assets/100774275/54f7e009-319c-4849-a417-0af06a28f49d)
+
+
+
+
 Frontend features
 
 - Building with viteJS
