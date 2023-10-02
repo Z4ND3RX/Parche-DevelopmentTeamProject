@@ -62,7 +62,7 @@ const Profile = () => {
               >
                 A continuación se reflejará la información actual acerca de su
                 cuenta y la subscripción presente
-                <JSONPretty data={user}/>
+                {/* <JSONPretty data={user}/> */}
               </Typography>
               
             </Biography>

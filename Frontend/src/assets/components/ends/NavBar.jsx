@@ -52,7 +52,7 @@ export const NavBar = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inicio", isAuthenticated ? "Eventos" : "", isAuthenticated ? "Perfil" : ""].map(
+        {["Inicio", isAuthenticated ? "Eventos" : "", isAuthenticated ? "Perfil" : "", , isAuthenticated ? "Map" : ""].map(
           (text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>

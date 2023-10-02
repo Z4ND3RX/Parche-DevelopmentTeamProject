@@ -31,9 +31,12 @@ function NavbarLinksBox() {
                 <NavLink to={"/Profile"} style={{ textDecoration: "none" }}>
                     <NavLinkStyle text="Perfil" />
                 </NavLink>
-            ) : (
-                <> </>
-            )}
+            ) : (<> </>)}
+            {isAuthenticated ? (
+                <NavLink to={"/Map"} style={{ textDecoration: "none" }}>
+                    <NavLinkStyle text="Mapa" />
+                </NavLink>
+            ) : (<> </>)}
         </NavbarLinksBox>
     )
 }
