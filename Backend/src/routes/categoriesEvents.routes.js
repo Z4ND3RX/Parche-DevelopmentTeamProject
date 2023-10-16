@@ -63,9 +63,36 @@ router.get('/events/:categoryId/:nicknameUser', async (req, res) => {
         });
         res.json(events);
     } catch (error) {
-        res.status(500).json({ error: 'Error al buscar eventos' });
+        res.status(500).json({ error: 'Failed to looking events' });
     }
 });
+
+//Filter bridge with event by category
+router.get('/events-category/:categoryId', async (req, res) => {
+    const { categoryId } = req.params;
+
+    try {
+        const events = await prisma.event.findMany({
+            where: {
+                eventsCategories: {
+                    some: {
+                        category: {
+                            id: categoryId
+                        }
+                    }
+                }
+            },
+            include: {
+                eventsCategories: true,
+                eventImages: true
+            }
+        });
+        res.json(events);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to looking events' });
+    }
+});
+
 
 //create new bridge
 router.post('/categoriesEvents/:id', async (req, res) => {

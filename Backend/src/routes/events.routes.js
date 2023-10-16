@@ -6,7 +6,18 @@ const router = Router();
 
 // get all events
 router.get('/events', async (req, res) => {
-    const events = await prisma.event.findMany()
+    const events = await prisma.event.findMany({
+        include: {
+            eventsCategories: {
+                include: {
+                    category: true
+                }
+            },
+            eventImages: true
+        }, orderBy: {
+            date: 'desc'
+        }
+    })
     res.json(events)
 })
 
