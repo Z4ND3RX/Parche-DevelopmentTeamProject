@@ -28,7 +28,7 @@ function MyMap({ onLocationSelected }) {
     return marker === null ? null : (
       <Marker position={marker}>
         <Popup>
-          <span>Un popup CSS3 bonito. <br/> Fácilmente personalizable.</span>
+          <span>Ubicación del lugar.</span>
         </Popup>
       </Marker>
     );
