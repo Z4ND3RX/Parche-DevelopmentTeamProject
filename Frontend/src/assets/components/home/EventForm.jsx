@@ -1,10 +1,12 @@
-import { Box, Button, Chip, CircularProgress, Grid, TextField } from '@mui/material';
+import { Box, Button, Chip, CircularProgress, TextField } from '@mui/material';
 import Textarea from '@mui/joy/Textarea';
 import React, { useEffect, useState } from 'react';
 import { API_URL } from '../../../services/Apirest';
 import axios from 'axios';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
+import MyMap from '../map/marker/MyMap';
+
 
 const EventForm = ({ onSubmit, onCancel }) => {
     const [loading, setLoading] = useState(true);
@@ -13,6 +15,8 @@ const EventForm = ({ onSubmit, onCancel }) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [existingRelations, setExistingRelations] = useState([]);
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [selectedImages, setSelectedImages] = useState([]);
 
     useEffect(() => {
         //get all categories 
@@ -55,10 +59,32 @@ const EventForm = ({ onSubmit, onCancel }) => {
         }
     };
 
+    
+    const handleLocationSelected = (location) => {
+        setSelectedLocation(location);
+        selectedLocation = location;
+        console.log("Ubicacion: " + location); // Imprime la ubicación seleccionada en la consola
+    };
+
+    // Función para manejar la selección de imágenes
+    const handleImageSelect = (e) => {
+        const files = Array.from(e.target.files);
+    
+        // Crear objetos File con nombres únicos para cada imagen
+        const imageFiles = files.map((file, index) => {
+          return new File([file], `image_${index + 1}.${file.type}`);
+        });
+    
+        setSelectedImages([...selectedImages, ...imageFiles]);
+      };
+
+     
+
+
     const [event, setEvent] = useState({
         form: {
-            "titulo": "",
-            "contenido": "",
+            "title": "",
+            "content": "",
             "date": "",
             "nicknameUser": "",
         },
@@ -98,10 +124,21 @@ const EventForm = ({ onSubmit, onCancel }) => {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const postWithUserId = {
             ...post.form,
             idUser: user.id
         };
+
+        
+        // Agregar otros campos del formulario según sea necesario
+    
+        // Agregar las imágenes seleccionadas
+        selectedImages.forEach((image, index) => {
+          formData.append(`myFiles${index}`, image);
+        });
+
+
         let url = API_URL + "/posts"
         try {
             const response = await axios.post(url, postWithUserId);
@@ -129,36 +166,61 @@ const EventForm = ({ onSubmit, onCancel }) => {
         whiteSpace: 'nowrap',
         width: 1,
     });
+    
 
     return (
         <>
-
+        <Box component="form" onSubmit={handleSubmit}>
             {loading ? (
                 <CircularProgress />
             ) : (
                 <>
+                <div style={{ overflowY: 'auto', maxHeight: '80vh', paddingTop: '5px' }}>
                     <TextField name='titulo'
                         type='text'
-                        placeholder='titulo'
+                        placeholder='Título'
                         id="outlined-basic"
-                        label="titulo"
+                        label="Título"
                         variant="outlined"
                         onChange={handleChange}
-                        value={event.form.titulo}
+                        value={event.form.title}
                         sx={{ marginBottom: 2 }} />
 
                     <Textarea
-                        name='contenido'
+                    style={{
+                        width: '100%', // Ancho del textarea
+                        height: '120px', // Altura del textarea
+                        resize: 'none' // Desactiva el cambio de tamaño
+                      }}
+                        name='descripcion'
                         onChange={handleChange}
-                        value={event.form.contenido}
+                        value={event.form.content}
                         disabled={false}
                         minRows={2}
                         maxRows={6}
-                        placeholder="contenido"
+                        placeholder="Descripción"
+                        label="Descripción"
                         size="lg"
                         variant="outlined"
                         sx={{ marginBottom: 2 }}
                     />
+
+                    <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '8px' }}>
+                        <label htmlFor="fecha">Fecha:</label>
+                        <TextField
+                            name="fecha"
+                            type="date"
+                            id="fecha"
+                            variant="outlined"
+                            onChange={handleChange}
+                            value={event.form.date}
+                        />
+                    </div>
+
+
+                    <MyMap onLocationSelected={handleLocationSelected} />
+                    
+                    
                     <Box display="flex" flexDirection="column">
                         {categories.reduce((rows, category, index) => {
                             if (index % 3 === 0) {
@@ -187,15 +249,26 @@ const EventForm = ({ onSubmit, onCancel }) => {
                             </Box>
                         ))}
                     </Box>
+
                     <Button sx={{ marginBottom: 2 }} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-                        Upload file
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
+            Elegir imágenes
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              style={{ display: 'none' }}
+              onChange={(e) => handleImageSelect(e)}
+            />
+          </Button>
+                    
+                    
                     <br />
-                    <Button type="submit" variant="outlined" sx={{ marginBottom: 2 }}>Save</Button>
-                    <Button color="error" variant="outlined" onClick={onCancel} sx={{ marginBottom: 2 }}>Cancel</Button>
+                    <Button type="submit" variant="outlined" sx={{ marginBottom: 2 }}>Guardar</Button>
+                    <Button color="error" variant="outlined" onClick={onCancel} sx={{ marginBottom: 2 }}>Cancelar</Button>
+                    </div>
                 </>
             )}
+        </Box>
         </>
     );
 }
