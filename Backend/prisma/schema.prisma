@@ -19,8 +19,8 @@ model Event {
   date DateTime
   cantAsistentes Int @default(0)
   nicknameUser String
-  latitude Float?
-  longitude Float?
+  latitude String?
+  longitude String?
   eventsCategories EventCategory[]
   eventImages Image[]
 }

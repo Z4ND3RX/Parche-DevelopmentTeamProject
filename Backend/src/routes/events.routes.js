@@ -49,46 +49,47 @@ router.get('/event/:eventId', async (req, res) => {
 //create new event
 router.post('/events', upload, async (req, res) => {
     try {
-        if (!req.files || req.files.length === 0) {
-            return res.status(400).json({ error: 'Debes subir al menos un archivo' });
-        }
-
-        const images = req.files.map(file => ({
-            type: file.mimetype,
-            name: file.filename,
-        }));
-
-        const { title, content, date, nicknameUser, latitude, longitude } = req.body;
-
-        if (!title || !content || !date || !nicknameUser || !latitude || !longitude) {
-            return res.status(400).json({ error: 'Debes proporcionar todos los campos necesarios' });
-        }
-
-        const eventData = {
-            title,
-            content,
-            date,
-            nicknameUser,
-            latitude: parseFloat(latitude), // Convertimos a float
-            longitude: parseFloat(longitude), // Convertimos a float
-            eventImages: {
-              create: images,
-            },
-          };
-
-        const newEvent = await prisma.event.create({
-            data: eventData,
-            include: {
-                eventImages: true
-            }
-        });
-
-        res.json(newEvent);
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ error: 'Debes subir al menos un archivo' });
+      }
+  
+      const images = req.files.map(file => ({
+        type: file.mimetype,
+        name: file.filename,
+      }));
+  
+      const { eventsCategories, ...eventData } = req.body; // Extraemos eventsCategories
+  
+      const parsedCategories = JSON.parse(eventsCategories); // Parseamos la cadena JSON
+  
+      const eventCategories = parsedCategories.map(idCategory => ({
+        idCategory: parseInt(idCategory.idCategory), // Asegúrate de que categoryId sea un número
+      }));
+  
+      const newEvent = await prisma.event.create({
+        data: {
+          ...eventData,
+          eventImages: {
+            create: images,
+          },
+          eventsCategories: {
+            create: eventCategories, // Crea las relaciones con las categorías
+          },
+        },
+        include: {
+          eventImages: true,
+          eventsCategories: true,
+        },
+      });
+  
+      res.json(newEvent);
     } catch (error) {
-        console.error('Error creando el evento:', error);
-        res.status(500).json({ error: 'Error al crear el evento' });
+      console.error('Error creando el evento:', error);
+      res.status(500).json({ error: 'Error al crear el evento' });
     }
-});
+  });
+  
+  
 
 //delete event
 router.delete('/event/:eventId', async (req, res) => {
